@@ -1,0 +1,59 @@
+{% extends 'master.html.twig' %}
+
+{% block content %}
+<div class="statistic__item">
+                                    <h2 class="number"></h2>
+                                    <span class="desc">Time Spent</span>
+                                    <div class="icon">
+                                        <i class="zmdi zmdi-account-o"></i>
+                                    </div>
+                                </div>
+
+<div class="top-campaign">
+
+                                    <h3 class="title-3 m-b-30">{{v.title}}</h3>
+                                        <div class="table-data-feature">
+                                                        <a href ="/RKProjects/projects/edit/{{v.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                            <i class="zmdi zmdi-edit"></i>
+                                                        </a>
+                                                        <a href ="/RKProjects/projects/delete/{{v.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </a>
+                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
+                                                            <i class="zmdi zmdi-more"></i>
+                                                        </a>
+                                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-top-campaign">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Description</td>
+                                                    <td>{{v.desc}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td>{{v.status}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Assigned to</td>
+                                                    <td>{{v.assigned}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Priority</td>
+                                                    <td>{{v.priority}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Start Date</td>
+                                                    <td>{{v.startDate}}</td>
+                                                </tr>
+                                           
+                                  
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+{% endblock %}
+

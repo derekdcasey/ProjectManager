@@ -1,0 +1,26 @@
+{% extends "master.html.twig" %}
+
+
+
+{% block content %}
+<h1>Confirm delete</h1>
+   <p><b>Are you sure you want to delete this project? This will also delete any workflows associated with this project.</b></p>
+    <form method="post" style="display: inline;">
+        <input class="btn btn-success" type="submit" value="Cancel">
+    </form>
+  
+    <form method="post"  style="display: inline;">
+        <input type="hidden" name="confirmed" value="true">
+        <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
+    <div>
+        <p>Title: {{p.title}}</p>
+        <p>Description: {{p.desc}}</p>
+        <p>Assigned: {{p.assigned}}</p>
+        <p>Status: {{p.status}}</p>
+        <p>Priority:{{p.priority}}</p>
+        <p>Start Date:{{p.startDate}}</p>
+    </div>
+
+
+{% endblock %}

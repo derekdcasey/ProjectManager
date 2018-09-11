@@ -1,0 +1,44 @@
+{% extends 'master.html.twig' %}
+{% block overview %}{% endblock %}
+{% block content %}
+
+
+                 <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>User</strong>
+                                        <small> {% if isEditing %}Edit{% else %}Add{% endif %}</small>
+                                    </div>
+                                    <div class="card-body card-block">
+                       
+<form method="post"  enctype="multipart/form-data">
+  <div class="form-group" >
+    <label for="title">Name</label>
+    <input type="text" class="form-control" id="name" name="name" value="{{v.name}}" placeholder="Enter Name">
+  </div>
+
+
+ 
+  <div class="form-group">
+    <label for="priority">Image</label>
+   <input class="form-control" type="file" name="userImage" accept="image/*">
+  </div>
+{% for e in errorList %}
+<p class="text-danger">{{e}}</p>
+{% endfor %}
+<br>
+
+  <button type="submit" class="btn btn-primary btn-block btn-lg">{% if isEditing %}Save{% else %}Add{% endif %}</button>
+</form>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+{% endblock %}

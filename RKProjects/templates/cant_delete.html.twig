@@ -1,0 +1,9 @@
+{% extends "master.html.twig" %}
+{% block content %}
+<h1>Can't Delete</h1>
+<br>
+<p class="text-danger">Project still has an active user!</p>
+<p class="text-danger">Please remove the user from the project if you want to delete it.</p>
+<br>
+<a class="btn btn-lg btn-primary" href="/projects">Go Back</a>
+{% endblock %}

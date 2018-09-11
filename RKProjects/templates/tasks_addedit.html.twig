@@ -1,0 +1,39 @@
+{% extends 'master.html.twig' %}
+{% block overview %}{% endblock %}
+{% block content %}
+
+
+                 <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Task</strong>
+                                        <small> {% if isEditing %}Edit{% else %}Add{% endif %}</small>
+                                        <a href ="/projects/view/{{projectId}}" type="submit" class="btn btn-primarybtn-lg pull-right">Go Back</a>
+                                    </div>
+                                    <div class="card-body card-block">
+                       
+<form method="post">
+  <div class="form-group" >
+    <label for="title">Task</label>
+    <input type="text" value="{{v.desc}}" class="form-control" id="desc" name="desc" value="{{v.desc}}" placeholder="Enter Task">
+  </div>
+
+{% for e in errorList %}
+<p class="text-danger">{{e}}</p>
+{% endfor %}
+<br>
+
+  <button type="submit" class="btn btn-primary btn-block btn-lg">{% if isEditing %}Save{% else %}Add{% endif %}</button>
+</form>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+{% endblock %}

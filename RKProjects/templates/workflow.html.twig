@@ -1,0 +1,74 @@
+{% extends 'master.html.twig' %}
+
+{% block content %}
+
+	 <div class="au-card m-b-30">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 m-b-40">Project Workflows</h3>
+                                                     <div class="rs-select2--light rs-select2--md">
+
+                                        <form method="POST" id="filters">
+                                        <label for="status">Status</label>
+                                            <select class="form-control" id="status" name="status" aria-hidden="true">
+                                                <option value="">All</option>
+                                                <option value="done"{% if status =='done' %} selected{% endif %} >Complete</option>
+                                                <option value="onHold" {% if status =='onHold' %} selected{% endif %} >On Hold</option>
+                                                <option value="todo" {% if status =='todo' %} selected{% endif %} >Todo</option>
+                                                <option value="inProgress" {% if status =='inProgress' %} selected{% endif %} >In Progress</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="rs-select2--light rs-select2--md">
+
+                                       
+                                         <label for="time">Time Scale</label>
+                                            <select class="form-control" id="time" name="time" aria-hidden="true">
+                                            <option value="hours" {% if time =='hours' %} selected{% endif %}>Hours</option>
+                                                <option value="minutes"{% if time =='minutes' %} selected{% endif %}>Minutes</option>
+                                                <option value="days"{% if time =='days' %} selected{% endif %}>Days</option>
+                                            </select>
+                                      
+                                        </div>
+
+                                        <div class="rs-select2--light rs-select2--md">
+                                        <button type="submit" class="au-btn au-btn-icon au-btn--blue au-btn--small">
+                                            <i class="zmdi zmdi-filter-list"></i>Filter</button>
+                                          </form>
+                                    </div>
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                </div>	
+			
+{% endblock %}
+{% block scripts %}
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+        labels: [{% for p in projects %}{% if loop.last %}"{{p.title}}"{% else %}"{{p.title}}",{% endif %}{% endfor %}],
+        datasets: [{
+            label: '# of {{time}}',
+             backgroundColor: 'rgba(13, 101, 57, 0.6)',
+            data: [{% for p in projects %} {% if loop.last %} {{p['total'] }} {% else %} {{p['total']}},{% endif %} {% endfor %}],
+            borderWidth: 1
+        }]
+    },
+ options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    suggestedMin: 0,
+                    suggestedMax: 1000
+                }
+            }]
+        }
+    }
+});
+
+
+</script>
+
+{% endblock %} 

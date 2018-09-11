@@ -1,0 +1,68 @@
+{% extends 'master.html.twig' %}
+{% block overview %}{% endblock %}
+{% block content %}
+
+
+                 <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Project</strong>
+                                        <small> {% if isEditing %}Edit{% else %}Add{% endif %}</small>
+                                    </div>
+                                    <div class="card-body card-block">
+                       
+<form method="post">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" id="title" name="title" value="{{v.title}}" placeholder="Enter title">
+  </div>
+<div class="form-group">
+    <label for="desc">Desc</label>
+   <textarea id="desc" name="desc" class="form-control">{{v.desc}}</textarea>
+    </div>
+ <div class="form-group">
+    <label for="assign">Assign To:</label>
+    <select class="form-control" id="assign" name="assign">
+     
+      <option value="">Unassigned</option>
+      {% for e in employees %}
+       <option {% if v.assigned == e.name %}selected{% endif %} value="{{e.name}}">{{e.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+<div class="form-group">
+    <label for="status">Status</label>
+    <select class="form-control" id="status" name="status">
+      <option {% if v.status == "inProgress" %}selected{% endif %} value="inProgress">In Progress</option>
+      <option {% if v.status == "done" %}selected{% endif %} value="done">Complete</option>
+      <option {% if v.status == "onHold" %}selected{% endif %} value="onHold">On Hold</option>
+      <option {% if v.status == "todo" %}selected{% endif %} value="todo">Todo</option>
+    </select>
+  </div>
+ 
+  <div class="form-group">
+    <label for="priority">Priority</label>
+    <input value="{{v.priority}}" type="number" class="form-control" id="priority" name="priority" placeholder="Priority level">
+  </div>
+{% for e in errorList %}
+<p class="text-danger">{{e}}</p>
+{% endfor %}
+<br>
+ <div class="row"> 
+ <div class="col"><button type="submit" class="btn btn-success btn-block btn-lg">{% if isEditing %}Save{% else %}Add{% endif %}</button></div>
+ {#<div class="col"><a href="/projects" class="btn btn-primary btn-block btn-lg pull-right"><i class="zmdi zmdi-arrow-left"></i> Back To Projects</a></div>#}
+ </div>
+</form>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+{% endblock %}

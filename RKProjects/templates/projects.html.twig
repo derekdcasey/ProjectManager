@@ -1,0 +1,199 @@
+{% extends 'master.html.twig' %}
+
+
+{% block content %}
+
+
+                                <!-- DATA TABLE -->
+
+                              
+                                <h3 class="title-5 m-b-35">Projects</h3>
+                                <div class="table-data__tool">
+                                    <div class="table-data__tool-left">
+                                   
+                                        <div class="rs-select2--light rs-select2--md">
+
+                                        <form method="POST" id="filters">
+                                        <label for="status">Status</label>
+                                            <select class="form-control" id="status" name="status" aria-hidden="true">
+                                                <option value="">All</option>
+                                                <option value="done"{% if status =='done' %} selected{% endif %} >Complete</option>
+                                                <option value="onHold" {% if status =='onHold' %} selected{% endif %} >On Hold</option>
+                                                <option value="todo" {% if status =='todo' %} selected{% endif %} >Todo</option>
+                                                <option value="inProgress" {% if status =='inProgress' %} selected{% endif %} >In Progress</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="rs-select2--light rs-select2--md">
+
+                                       
+                                         <label for="assigned">Assigned To</label>
+                                            <select class="form-control" id="assigned" name="assigned" aria-hidden="true">
+                                                <option value="">All</option>
+                                        {% for e in employees %}
+                                         <option {% if assigned == e.name %} selected{% endif %} value="{{e.name}}">{{e.name}}</option>
+                                        {% endfor %}
+                                            </select>
+                                      
+                                        </div>
+                                        <div class="rs-select2--light rs-select2--md">
+                                         <label for="sort">Sort By</label>
+                                            <select class="form-control" id="sort" name="sort" aria-hidden="true">
+                                                <option value="dateAdded ASC" {% if sort =='dateAdded ASC' %} selected{% endif %}>Date ASC</option>
+                                                 <option value="dateAdded DESC" {% if sort =='dateAdded DESC' %} selected{% endif %}>Date DESC</option>
+                                                <option value="priority DESC" {% if sort =='priority DESC' %} selected{% endif %}>Priority</option>
+                                            </select>
+           
+                                        </div>
+                                        <div class="rs-select2--light rs-select2--md">
+                                        <button type="submit" class="au-btn au-btn-icon au-btn--blue au-btn--small">
+                                            <i class="zmdi zmdi-filter-list"></i>Filter</button>
+                                          </form>
+                                    </div>
+                                            
+                                    </div>
+
+                                
+                                </div>
+                            
+                            <br>
+
+
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
+                                        <thead>
+                                            <tr>
+                                                <th>working</th>
+                                                <th>title</th>
+                                                <th>description</th>
+                                                <th>assigned to</th>
+                                                <th>date added</th>
+                                                <th>status</th>
+                                                <th>priority</th>
+                                                <th>    <div class="table-data__tool-right">
+                                        <a href="/projects/add" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                            <i class="zmdi zmdi-plus"></i>add project</a>
+                                        
+                                    </div></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td colspan=8> 
+                                        <div id="d0" class="droppable" style="height:80px;width:100%;border:1px solid gray; white-space: nowrap;">  <span class="text-align-center" style="font-size:4em;opacity: 0.1;margin-left:50%;float:right;">&nbsp;INACTIVE USERS</span>
+                                        </div>
+                                        </td>
+                                        </tr>
+                                        <tr class="spacer"></tr>
+                                        {% for l in list %}
+                         
+                                            <tr class="tr-shadow">
+                                                <td>
+                                                <div class="droppable" id="d{{l.id}}" style="height:40px;width:200px;border:2px dashed green"></div>
+                                                </td>
+                                                <td> <a class="text-dark" href="/projects/view/{{l.id}}">{{l.title}}</a></td>
+                                                <td title="{{l.desc}}" class="desc">{{l.desc|slice(0,30)}}...</td>
+                                                 <td>{{l.assigned}}</td>
+                                                <td>{{l.dateAdded|date("Y-d-m")}}</td>
+                                                <td><span class="badge badge-primary">{{l.status}}</span></td>
+                                                <td>{{l.priority}}</td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <a href="/projects/view/{{l.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
+                                                            <i class="zmdi zmdi-mail-send"></i>
+                                                        </a>
+                                                        <a href ="/projects/edit/{{l.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                            <i class="zmdi zmdi-edit"></i>
+                                                        </a>
+                                                        <a href ="/projects/delete/{{l.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </a>
+                                                        {#<a class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
+                                                            <i class="zmdi zmdi-more"></i>
+                                                        </a>#}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                       
+                                            <tr class="spacer"></tr>
+                                     {% endfor %} 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END DATA TABLE -->
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+$( document ).ready(function() {
+
+
+
+    
+
+
+          //drop listeners
+          $("#d0").droppable({
+                  drop: function(event, ui) {
+                        var draggableId = ui.draggable.attr("id").substring(1);
+                            var droppableId = $(this).attr("id").substring(1);
+                            $.ajax({
+                            url: "http://66.170.180.206/api/workflow",   
+                            data: JSON.stringify({
+                                "empId": draggableId,
+                                "projId": droppableId,
+                            }),
+                            type: "POST",
+                            dataType: "json"
+                        }).done(function (data) {
+                        });
+                  },
+                  over: function(event, ui) {
+                   
+                  }
+              });
+
+            {% for p in list%}
+            createListener({{p.id}});
+            {% endfor %}
+
+            {% for e in employees %}
+            $( " <div id='e{{e.id}}' title='{{e.name}}' style='display: inline-block;' class='drag'><img class='projects-image' src='http://66.170.180.206{{e.imgPath}}' alt='{{e.name}}'><br></div>" ).appendTo( "#d{{e.currentProj}}" );           
+            {% endfor %}
+
+    jQuery(".drag").draggable({
+        revert: 'invalid'
+      });
+
+  
+
+});
+ function createListener(projectID){
+              $("#d" + projectID +"" ).droppable({
+                  drop: function(event, ui) {
+                        var draggableId = ui.draggable.attr("id").substring(1);
+                        var droppableId = $(this).attr("id").substring(1);
+                           // alert(draggableId + " " + droppableId);
+                        $.ajax({
+                            url: "http://66.170.180.206/api/workflow",   
+                            data: JSON.stringify({
+                                "empId": draggableId,
+                                "projId": droppableId,
+                            }),
+                            type: "POST",
+                            dataType: "json"
+                        }).done(function (data) {
+                         
+                        });
+                            
+                  },
+                  over: function(event, ui) {
+                  //addHighlight
+                  }
+              });
+            }
+
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'master.html.twig' %}
+
+{% block content %}
+
+
+
+<div class="top-campaign">
+
+                                    <h3 class="title-3 m-b-30">Users</h3>
+                                        <div class="pull-right">
+                                        <a href="/employees/add" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                            <i class="zmdi zmdi-plus"></i>add user</a> 
+                                        </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-top-campaign">
+                                            <tbody>
+                                            {% for e in emp %}
+                                                <tr>
+                                                    <td>
+                                                    <img class="smaller-image" src="http://66.170.180.206{{e.imgPath}}" alt="{{e.name}}"></td>
+                                                    
+                                                    <td>
+                                                    <div class="text">
+                                                                <h5 class="name">{{e.name}}</h5>
+                                                                <p class="text-success">{% if e.currentWorkflow != 0 %}Active{% endif %} </p>
+                                                            </div></td>
+                                                    <td>
+                                                     <h5 class="name">currently on</h5>
+                                                     <p><strong>{% if e.currentProj == 0 %}Inactive{% else %}<a href="/projects/view/{{e.currentProj}}">{{e.projName}}</a>{% endif %}</strong></p>
+                                                    </td>
+                                                    <td> {#
+                                                    <div class="table-data-feature">
+                                                        <a href ="/employees/edit/{{e.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                            <i class="zmdi zmdi-edit"></i>
+                                                        </a>
+                                                        <a href ="/employees/delete/{{e.id}}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </a>
+                                                        
+                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
+                                                            <i class="zmdi zmdi-more"></i>
+                                                        </a> 
+                                                    </div>#}
+                                                    </td>
+                                                </tr>
+                                               {% endfor %}
+
+                                               
+                                                            
+                                           
+                                  
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+{% endblock %}
+
